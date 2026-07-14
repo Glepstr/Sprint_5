@@ -1,16 +1,17 @@
 import pytest
-import sys
-import os
-import time
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 from locators.locators import MainPageLocators, LoginPageLocators, RegistrationPageLocators
 
+from helpers import generate_test_email
+from data import TEST_PASSWORD, EXISTING_USER
+
 class TestRegistration:
 
-    def test_successful_registration(self, driver, wait, test_user_email, test_password):
+    def test_successful_registration(self, driver):
         wait = WebDriverWait(driver, 10)
+        test_user_email = generate_test_email()
 
         # Нажимаем кнопку «Вход и регистрация»
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
@@ -20,8 +21,8 @@ class TestRegistration:
         
         # Заполняем форму регистрации
         wait.until(EC.presence_of_element_located(RegistrationPageLocators.EMAIL_INPUT)).send_keys(test_user_email)
-        driver.find_element(*RegistrationPageLocators.PASSWORD_INPUT).send_keys(test_password)
-        driver.find_element(*RegistrationPageLocators.CONFIRM_PASSWORD_INPUT).send_keys(test_password)
+        driver.find_element(*RegistrationPageLocators.PASSWORD_INPUT).send_keys(TEST_PASSWORD)
+        driver.find_element(*RegistrationPageLocators.CONFIRM_PASSWORD_INPUT).send_keys(TEST_PASSWORD)
         driver.find_element(*RegistrationPageLocators.CREATE_ACCOUNT_BUTTON).click()
 
         # Проверяем переход на главную и отображение аватара
@@ -29,7 +30,7 @@ class TestRegistration:
         assert driver.find_element(*MainPageLocators.USER_AVATAR).is_displayed(), "Аватар не отображается"
         
 
-    def test_registration_invalid_email(self, driver, wait):
+    def test_registration_invalid_email(self, driver):
         wait = WebDriverWait(driver, 10)
 
         # Нажимаем кнопку «Вход и регистрация»
@@ -53,7 +54,7 @@ class TestRegistration:
         error_message = driver.find_element(*RegistrationPageLocators.EMAIL_ERROR_MESSAGE).text
         assert "Ошибка" in error_message, "Сообщение об ошибке не отображается"
 
-    def test_registration_existing_user(self, driver, wait, existing_user):
+    def test_registration_existing_user(self, driver):
         wait = WebDriverWait(driver, 10)
 
         # Нажимаем кнопку «Вход и регистрация»
@@ -63,9 +64,9 @@ class TestRegistration:
         wait.until(EC.element_to_be_clickable(LoginPageLocators.REGISTER_LINK)).click()
         
         # Заполняем форму данными существующего пользователя
-        wait.until(EC.presence_of_element_located(RegistrationPageLocators.EMAIL_INPUT)).send_keys(existing_user["email"])
-        driver.find_element(*RegistrationPageLocators.PASSWORD_INPUT).send_keys(existing_user["password"])
-        driver.find_element(*RegistrationPageLocators.CONFIRM_PASSWORD_INPUT).send_keys(existing_user["password"])
+        wait.until(EC.presence_of_element_located(RegistrationPageLocators.EMAIL_INPUT)).send_keys(EXISTING_USER["email"])
+        driver.find_element(*RegistrationPageLocators.PASSWORD_INPUT).send_keys(EXISTING_USER["password"])
+        driver.find_element(*RegistrationPageLocators.CONFIRM_PASSWORD_INPUT).send_keys(EXISTING_USER["password"])
         driver.find_element(*RegistrationPageLocators.CREATE_ACCOUNT_BUTTON).click()
         
         # Проверяем, что поля подсвечены красным и отображается ошибка

@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 
 class TestAdCreation:
 
-    def test_create_ad_unauthorized(self, driver, wait):
+    def test_create_ad_unauthorized(self, driver):
         wait = WebDriverWait(driver, 10)
 
         # Нажимаем кнопку «Разместить объявление» неавторизованным пользователем
@@ -21,7 +21,7 @@ class TestAdCreation:
         modal_title = driver.find_element(*MainPageLocators.MODAL_TITLE).text
         assert "авторизуйтесь" in modal_title.lower(), "Неверный текст в модальном окне"
 
-    def test_create_ad_authorized(self, driver, wait, login_existing_user):
+    def test_create_ad_authorized(self, driver, login_existing_user):
         wait = WebDriverWait(driver, 10)
 
         # Генерируем уникальное название объявления
