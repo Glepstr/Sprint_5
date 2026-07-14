@@ -6,6 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import random
 import string
 import time
+from locators.locators import MainPageLocators, LoginPageLocators
 
 import sys
 import os
@@ -47,7 +48,6 @@ def existing_user():
 @pytest.fixture
 def login_existing_user(driver, wait, existing_user):
     """Фикстура для авторизации существующего пользователя"""
-    from locators.locators import MainPageLocators, LoginPageLocators
     
     # Нажимаем кнопку входа
     wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
