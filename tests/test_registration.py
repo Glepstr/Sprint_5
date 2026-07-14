@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from locators.locators import MainPageLocators, LoginPageLocators, RegistrationPageLocators
 
 from helpers import generate_test_email
-from data import TEST_PASSWORD, EXISTING_USER
+from data import TEST_PASSWORD, EXISTING_USER, REGISTR_ERROR_MESSAGE
 
 class TestRegistration:
 
@@ -52,7 +52,7 @@ class TestRegistration:
         assert len(error_fields) >= 3, "Не все поля подсвечены красным"
         
         error_message = driver.find_element(*RegistrationPageLocators.EMAIL_ERROR_MESSAGE).text
-        assert "Ошибка" in error_message, "Сообщение об ошибке не отображается"
+        assert REGISTR_ERROR_MESSAGE in error_message, "Сообщение об ошибке не отображается"
 
     def test_registration_existing_user(self, driver):
         wait = WebDriverWait(driver, 10)
@@ -76,4 +76,4 @@ class TestRegistration:
         assert len(error_fields) >= 3, "Не все поля подсвечены красным"
         
         error_message = driver.find_element(*RegistrationPageLocators.EMAIL_ERROR_MESSAGE).text
-        assert "Ошибка" in error_message, "Сообщение об ошибке не отображается"
+        assert REGISTR_ERROR_MESSAGE in error_message, "Сообщение об ошибке не отображается"

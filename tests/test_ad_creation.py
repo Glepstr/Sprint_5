@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 from locators.locators import MainPageLocators, AdCreationLocators, ProfilePageLocators
+from data import AUTH_MESSAGE
 
 class TestAdCreation:
 
@@ -18,7 +19,7 @@ class TestAdCreation:
         assert driver.find_element(*MainPageLocators.MODAL_WINDOW).is_displayed(), "Модальное окно не отображается"
         
         modal_title = driver.find_element(*MainPageLocators.MODAL_TITLE).text
-        assert "авторизуйтесь" in modal_title.lower(), "Неверный текст в модальном окне"
+        assert AUTH_MESSAGE in modal_title.lower(), "Неверный текст в модальном окне"
 
     def test_create_ad_authorized(self, driver, login_existing_user):
         wait = WebDriverWait(driver, 10)
