@@ -3,12 +3,15 @@ import sys
 import os
 import time
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from locators.locators import MainPageLocators, LoginPageLocators, RegistrationPageLocators
 
 class TestRegistration:
 
     def test_successful_registration(self, driver, wait, test_user_email, test_password):
+        wait = WebDriverWait(driver, 10)
+
         # Нажимаем кнопку «Вход и регистрация»
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
         
@@ -27,6 +30,8 @@ class TestRegistration:
         
 
     def test_registration_invalid_email(self, driver, wait):
+        wait = WebDriverWait(driver, 10)
+
         # Нажимаем кнопку «Вход и регистрация»
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
         
@@ -49,6 +54,8 @@ class TestRegistration:
         assert "Ошибка" in error_message, "Сообщение об ошибке не отображается"
 
     def test_registration_existing_user(self, driver, wait, existing_user):
+        wait = WebDriverWait(driver, 10)
+
         # Нажимаем кнопку «Вход и регистрация»
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
         

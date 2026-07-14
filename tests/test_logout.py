@@ -1,10 +1,13 @@
 import pytest
 from selenium.webdriver.support import expected_conditions as EC
 from locators.locators import MainPageLocators
+from selenium.webdriver.support.ui import WebDriverWait
 
 class TestLogout:
 
     def test_logout(self, driver, wait, login_existing_user):
+        wait = WebDriverWait(driver, 10)
+
         # Проверяем, что пользователь авторизован
         wait.until(EC.presence_of_element_located(MainPageLocators.USER_AVATAR))
         assert driver.find_element(*MainPageLocators.USER_AVATAR).is_displayed(), "Пользователь не авторизован"

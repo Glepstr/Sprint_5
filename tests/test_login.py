@@ -1,10 +1,13 @@
 import pytest
 from selenium.webdriver.support import expected_conditions as EC
 from locators.locators import MainPageLocators, LoginPageLocators
+from selenium.webdriver.support.ui import WebDriverWait
 
 class TestLogin:
 
     def test_successful_login(self, driver, wait, existing_user):
+        wait = WebDriverWait(driver, 10)
+
         # Нажимаем кнопку «Вход и регистрация»
         wait.until(EC.element_to_be_clickable(MainPageLocators.LOGIN_BUTTON)).click()
         

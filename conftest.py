@@ -23,11 +23,6 @@ def driver():
     driver.quit()
 
 @pytest.fixture
-def wait(driver):
-    """Фикстура для WebDriverWait"""
-    return WebDriverWait(driver, 10)
-
-@pytest.fixture
 def test_user_email():
     """Генерация уникального email для каждого теста"""
     random_string = ''.join(random.choices(string.ascii_lowercase + string.digits, k=8))
