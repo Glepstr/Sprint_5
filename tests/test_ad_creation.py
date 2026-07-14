@@ -49,12 +49,12 @@ class TestAdCreation:
         driver.find_element(*AdCreationLocators.CONDITION_RADIO_NEW).click()
         
         # Публикуем объявление
-        driver.find_element(*AdCreationLocators.PUBLISH_BUTTON).click()
+        publish_button = driver.find_element(*AdCreationLocators.PUBLISH_BUTTON)
+        publish_button.click()
+
+        wait.until(EC.staleness_of(publish_button))
 
         # Переходим в профиль пользователя 
-        # !!! ЗДЕСЬ ЧТО ТО НЕ ТАК, Я НЕ ПОНИМАЮ КАК ЭТО РЕШИТЬ. ПОСЛЕ ПУБЛИКАЦИИ СТАРАЯ КНОПКА ПРОФИЛЯ ПРОПАДАЕТ, НО СЕЛЕНИУМ ПЫТАЕТСЯ НАЖАТЬ
-        # ИМЕННО СТАРУЮ КНОПКУ И ИЗ ЗА ЭТОГО Я ПОЛУЧАЮ ОШИБКУ. Не знаю как без слипа решить
-        time.sleep(2)
         wait.until(EC.element_to_be_clickable(MainPageLocators.USER_AVATAR)).click()
         
         # Проверяем, что объявление появилось в блоке "Мои объявления"
