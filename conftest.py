@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from locators.locators import MainPageLocators, LoginPageLocators
 from data import EXISTING_USER
+from urls import DOSKA
 
 @pytest.fixture(scope="function")
 def driver():
@@ -13,7 +14,7 @@ def driver():
     # options.add_argument("--headless")  # Раскомментируйте для безголового режима
     driver = webdriver.Chrome(options=options)
     driver.maximize_window()
-    driver.get("https://qa-desk.education-services.ru/")
+    driver.get(DOSKA)
     yield driver
     driver.quit()
 
