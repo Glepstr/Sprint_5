@@ -4,7 +4,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 from locators.locators import MainPageLocators, AdCreationLocators, ProfilePageLocators
-from selenium.webdriver.common.by import By
 
 class TestAdCreation:
 
@@ -37,13 +36,11 @@ class TestAdCreation:
         
         # Выбираем категорию (если это dropdown)
         driver.find_element(*AdCreationLocators.CATEGORY_DROPDOWN).click()
-        category_option = (By.XPATH, "//span[contains(text(), 'Хобби')]")
-        driver.find_element(*category_option).click()
+        driver.find_element(*AdCreationLocators.CATEGORY_OPTION).click()
 
         # Выбираем город
         driver.find_element(*AdCreationLocators.CITY_DROPDOWN).click()
-        city_option = (By.XPATH, "//span[contains(text(), 'Санкт-Петербург')]")
-        driver.find_element(*city_option).click()
+        driver.find_element(*AdCreationLocators.CITY_OPTION).click()
         
         # Выбираем состояние товара
         driver.find_element(*AdCreationLocators.CONDITION_RADIO_NEW).click()
@@ -63,5 +60,4 @@ class TestAdCreation:
         card = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(AdCreationLocators.card_by_title(ad_title))
         )
-        
         assert ad_title in card.text, f"Название '{ad_title}' не найдено в карточке"
